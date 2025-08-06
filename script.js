@@ -18,7 +18,7 @@ window.onload = function() {
                 this.dataset.valid = this.value;
             } else {
                 if (this.dataset.valid != "") {
-                    document.querySelector('#cache :nth-child(' + calculateIndex(this.value) +')').style.backgroundColor = '';
+                    document.querySelector('#cache :nth-child(' + calculateIndex(this.dataset.valid) +')').style.backgroundColor = '';
                     this.dataset.valid = '';
                 }
             }
