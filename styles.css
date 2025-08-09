@@ -17,6 +17,13 @@ input:invalid:focus {
 #left {
     width: calc(100vw - 100vh);
     background-color: beige;
+}
+
+#controlPanel {
+    padding: 10px;
+}
+
+#inputPanel {
     display: flex;
     flex-wrap: wrap;
     align-content: flex-start;

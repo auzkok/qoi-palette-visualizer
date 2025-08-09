@@ -13,9 +13,25 @@ function isValidColor(input) {
     return input.value != '' && input.checkValidity();
 }
 
+function resetState() {
+    var inputs = document.querySelectorAll('.row > input');
+    inputs.forEach(function(input) {
+        input.value = '';
+        input.dataset.valid = '';
+    });
+
+    var cells = document.querySelectorAll('.cell');
+    cells.forEach(function(cell) {
+        cell.style.backgroundColor = '';
+    });
+
+    cacheColors = Array(64).fill([]);
+}
+
 var cacheColors = Array(64).fill([]);
 
 window.onload = function() {
+    resetState();
     var inputs = document.querySelectorAll('.row > input');
     inputs.forEach(function(input) {
         input.addEventListener('input', function(e) {
@@ -42,5 +58,7 @@ window.onload = function() {
                 console.log(cacheColors[index].length);
             }
         });
-    })
+    });
+
+    document.querySelector('#resetButton').addEventListener('click', resetState);
 };
