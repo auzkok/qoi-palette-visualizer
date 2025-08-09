@@ -74,3 +74,7 @@ input:invalid:focus {
 .block {
     margin: 1em;
 }
+
+.hiddenAndDangerous {
+    display: none;
+}

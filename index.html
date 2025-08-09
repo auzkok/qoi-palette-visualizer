@@ -9,17 +9,11 @@
     <script src="script.js"></script>
   </head>
   <body>
-    <!--
-    <div><label for="paletteFile"><button id="loadPaletteButton">Load Palette</button></label>
-        
-        <input type="file" id="paletteFile" disabled />
-        <button id="analyzeImageButton">Analyze Image</button>
-        <input type="file" id="imageFile" disabled />
-    </div>
-    -->
     <div id="body">
         <div id="left">
             <div id="controlPanel">
+                <button id="analyzeImageButton">Analyze Image</button>
+                <input type="file" id="imageFile" accept="image/*" class="hiddenAndDangerous">
                 <button id="resetButton">Reset</button>
             </div>
             <div id="inputPanel">
