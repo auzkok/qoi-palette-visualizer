@@ -31,10 +31,35 @@ function resetState() {
     cacheColors = Array(64).fill([]);
 }
 
+function generatePalette() {
+    var str = 'GIMP Palette\n';
+    var inputs = document.querySelectorAll('.row > input');
+    inputs.forEach(function(input) {
+        var hex = input.dataset.valid;
+        if (hex != '') {
+            var r = parseInt(hex.substring(0,2), 16);
+            var g = parseInt(hex.substring(2,4), 16);
+            var b = parseInt(hex.substring(4), 16);
+            str += r + ' ' + g + ' ' + b + ' ' + hex + '\n';
+        }
+    });
+    return str;
+}
+
 var cacheColors = Array(64).fill([]);
 
 window.onload = function() {
     resetState();
+
+    document.querySelector('#exportButton').addEventListener('click', function() {
+        var paletteContent = generatePalette();
+        const blob = new Blob([paletteContent], { type: 'text/plain' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'palette.gpl';
+        link.click();
+        URL.revokeObjectURL(link.href);
+    })
 
     document.querySelector('#analyzeImageButton').addEventListener('click', function() {
         document.querySelector('#imageFile').click();
