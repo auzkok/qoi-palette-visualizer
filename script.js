@@ -46,6 +46,27 @@ function generatePalette() {
     return str;
 }
 
+function parsePalette(str) {
+    var colors = [];
+    var lines = str.split('\n');
+    if (lines[0] != 'GIMP Palette') {
+        return undefined;
+    } else {
+        lines.shift();
+    }
+    for (var line of lines) {
+        if (line == '' || line[0] == '#') {
+            continue;
+        }
+        components = line.split(' ');
+        if (components.length < 3) {
+            return undefined;
+        }
+        colors.push(toHex(parseInt(components[0])) + toHex(parseInt(components[1])) + toHex(parseInt(components[2])));
+    }
+    return colors;
+}
+
 var cacheColors = Array(64).fill([]);
 
 window.onload = function() {
@@ -60,6 +81,32 @@ window.onload = function() {
         link.click();
         URL.revokeObjectURL(link.href);
     })
+
+    document.querySelector('#importButton').addEventListener('click', function() {
+        document.querySelector('#paletteFile').click();
+    });
+
+    document.querySelector('#paletteFile').addEventListener('change', async function(e) {
+        var file = e.target.files[0];
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            var text = e.target.result;
+            var colors = parsePalette(text);
+            if (colors != undefined) {
+                var j = 0;
+                resetState();
+                for (var color of colors) {
+                    var input = document.querySelector('#inputPanel > :nth-child(' + (Math.floor(j/8)+1) + ') > :nth-child(' + (j%8+1)  + ') > input');
+                    input.value = color;
+                    j++;
+                    input.dispatchEvent(new InputEvent('input'));
+                }
+            } else {
+                console.log('Failed loading palette!');
+            }
+        };
+        reader.readAsText(file);
+    });
 
     document.querySelector('#analyzeImageButton').addEventListener('click', function() {
         document.querySelector('#imageFile').click();
