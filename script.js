@@ -23,6 +23,9 @@ function resetState() {
         input.dataset.valid = '';
     });
 
+    document.querySelector('#paletteSize').value = 64;
+    document.querySelector('#paletteSize').dispatchEvent(new Event('change'));
+
     var cells = document.querySelectorAll('.cell');
     cells.forEach(function(cell) {
         cell.style.backgroundColor = '';
@@ -149,6 +152,15 @@ window.onload = function() {
                 input.dispatchEvent(new InputEvent('input'));
             }
         }
+    });
+
+    document.querySelector('#paletteSize').addEventListener('change', function(e) {
+        var n = 0;
+        var size = parseInt(e.target.value);
+        document.querySelectorAll('.row').forEach(function(row) {
+            row.style.display= n < size ? '' : 'none';
+            n++;
+        });
     });
 
     var inputs = document.querySelectorAll('.row > input');
