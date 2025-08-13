@@ -166,11 +166,15 @@ window.onload = function() {
     var inputs = document.querySelectorAll('.row > input');
     inputs.forEach(function(input) {
         input.addEventListener('input', function(e) {
+            var preview = this.previousElementSibling.classList.contains('preview') ? this.previousElementSibling.children[0] : null;
             if (isValidColor(this)) {
                 var index = calculateIndex(this.value);
                 document.querySelector('#cache :nth-child(' + index +')').style.backgroundColor = '#' + this.value;
                 this.dataset.valid = this.value;
                 cacheColors[index].push(this.value);
+                if (preview != null) {
+                    preview.style.backgroundColor = '#' + this.value;
+                }
             } else {
                 if (this.dataset.valid != "") {
                     var index = calculateIndex(this.dataset.valid);
@@ -180,6 +184,9 @@ window.onload = function() {
                         cacheColors[index].splice(colorPos, 1);
                         if (cacheColors[index].length > 0) {
                             document.querySelector('#cache :nth-child(' + index +')').style.backgroundColor = '#' + cacheColors[index][cacheColors[index].length - 1];
+                        }
+                        if (preview != null) {
+                            preview.style.backgroundColor = '';
                         }
                     }
                     this.dataset.valid = '';
