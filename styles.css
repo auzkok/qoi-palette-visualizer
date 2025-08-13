@@ -2,6 +2,10 @@ body {
     margin: 0px;
 }
 
+input {
+    font-family: monospace;
+}
+
 input:invalid {
     background-color: red;
 }
